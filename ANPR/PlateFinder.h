@@ -17,5 +17,6 @@ public:
 	PlateFinder(void);
 	virtual ~PlateFinder(void);
 	void ImageRestoration(IplImage *src);	// tien xu ly anh goc
+	IplImage* FindPlate (IplImage *src);	// tim va cat bien so
+	int CountCharacter(IplImage *plate);	// dem so vung co kha nang la ki tu
 };
-
