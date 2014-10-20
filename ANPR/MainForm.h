@@ -159,8 +159,6 @@ namespace ANPR {
 	private: System::Void btnRecognise_Click(System::Object^  sender, System::EventArgs^  e) {
 				 PlateFinder pf;
 
-
-
 				 if (!src)
 				 {
 					 MessageBox::Show("No image loaded", "Error", MessageBoxButtons::OK);
@@ -173,11 +171,12 @@ namespace ANPR {
 				 cvResize(src, resizeImg);
 
 				 // Convert sang anh xam
-				 IplImage *grayImg = cvCreateImage (cvGetSize(resizeImg), IPL_DEPTH_8U, 1);	// Anh resize
-				 cvCvtColor(resizeImg, grayImg, CV_RGB2GRAY);
-				 cvNormalize(grayImg, grayImg, 0, 255, CV_MINMAX);
+				 //IplImage *grayImg = cvCreateImage (cvGetSize(resizeImg), IPL_DEPTH_8U, 1);	// Anh resize
+				 /*cvCvtColor(resizeImg, grayImg, CV_RGB2GRAY);
+				 cvNormalize(grayImg, grayImg, 0, 255, CV_MINMAX);*/
 
-				 pf.ImageRestoration(grayImg);
+				 //pf.ImageRestoration(grayImg);
+				 pf.FindPlate(resizeImg);
 			 }
 	};
 }
