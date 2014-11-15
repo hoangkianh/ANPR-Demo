@@ -224,7 +224,7 @@ IplImage* PlateFinder::FindPlate (IplImage *src) {
 					// luu vao mang cac bien so plateArr
 					int cnt = CountCharacter(plate);
 					if (cnt >= 5) {
-						plateArr[j] = plate;
+						plateArr[j] = cvCloneImage(plate);
 						j++;
 					}
 				}
@@ -254,8 +254,8 @@ IplImage* PlateFinder::FindPlate (IplImage *src) {
 	}
 
 	cvShowImage("cloneImg", cloneImg);
-	cvShowImage("rectImg", rectImg);
-	cvShowImage("plate", plateArr[0]);
+	//cvShowImage("rectImg", rectImg);
+	//cvShowImage("plate", plateArr[0]);
 
 	cvReleaseImage(&contourImg);
 	cvReleaseImage(&rectImg);
@@ -267,15 +267,14 @@ IplImage* PlateFinder::FindPlate (IplImage *src) {
 
 int PlateFinder::CountCharacter(IplImage *plate) {
 	int cnt = 0;
-	IplImage *resizeImg, *grayImg, *binaryImg;
+	IplImage *resizeImg, *binaryImg;
 
 	resizeImg = cvCreateImage (cvSize(408, 70), IPL_DEPTH_8U, 3);
-	grayImg = cvCreateImage (cvSize(408, 70), IPL_DEPTH_8U,  1);
 	binaryImg = cvCreateImage (cvSize(408, 70), IPL_DEPTH_8U,  1);
 
 	cvResize(plate, resizeImg);
-	cvCvtColor(resizeImg, grayImg, CV_RGB2GRAY);
-	cvAdaptiveThreshold(grayImg, binaryImg, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 13, 2);
+	cvCvtColor(resizeImg, binaryImg, CV_RGB2GRAY);
+	cvAdaptiveThreshold(binaryImg, binaryImg, 255, CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY, 13, 2);
 
 	//cvShowImage("binaryImg", binaryImg);
 
@@ -303,7 +302,7 @@ int PlateFinder::CountCharacter(IplImage *plate) {
 		contours = contours->h_next;
 	}
 
-	cvShowImage("resizeImg", resizeImg);
+	//cvShowImage("resizeImg", resizeImg);
 
 	return cnt;
 }

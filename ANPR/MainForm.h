@@ -7,6 +7,7 @@
 #include <stdio.h>
 
 #include "PlateFinder.h"
+#include "Recognise.h"
 
 namespace ANPR {
 
@@ -176,7 +177,14 @@ namespace ANPR {
 				 cvNormalize(grayImg, grayImg, 0, 255, CV_MINMAX);*/
 
 				 //pf.ImageRestoration(grayImg);
-				 pf.FindPlate(resizeImg);
+				 IplImage *plate = pf.FindPlate(resizeImg);
+				 if (plate)
+				 {
+					 Recognise rc;
+					 vector<IplImage *> cVector = rc.FindCharacter(plate);
+				 } else {
+					 MessageBox::Show(L"Not found", L"Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+				 }
 			 }
 	};
 }
